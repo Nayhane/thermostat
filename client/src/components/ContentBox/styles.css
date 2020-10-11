@@ -1,0 +1,58 @@
+
+.box {
+  background-color: #f8f8ff;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 16px;
+  text-align: center;
+  width: 25vw;
+}
+
+
+.time {
+  color: #1C466C;
+  line-height: 1.5;
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 32px;
+}
+
+.title {
+  color: #000;
+  line-height: 1.5;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.body {
+  color: #000;
+  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.MuiSvgIcon-root {
+  color: #66CE98;
+  font-size: 56px;
+}
+
+@media screen and (min-width: 600px) {
+  .time {
+    font-size: 40px;
+  }
+
+  .body, .title {
+    font-size: 24px;
+  }
+
+  .MuiSvgIcon-root {
+    font-size: 64px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .MuiSvgIcon-root {
+    font-size: 72px;
+  }
+}

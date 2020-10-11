@@ -1,0 +1,55 @@
+.app {
+  background-color: #44ADF1;
+  display: block;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.generic-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.temperature {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.button {
+  background-color: #f8f8ff;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin-left: -24px;
+  width: 100vw;
+}
+
+@media screen and (min-width: 600px) {
+  .temp-container {
+    display: block;
+  }
+
+  .app {
+    display: flex;
+    padding: 16px;
+    margin-top: 56px;
+  }
+
+  .temperature {
+    display: block;
+  }
+
+  .button {
+    margin: 8px;
+    padding: 8px;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .app {
+    padding: 24px;
+  }
+}
