@@ -18,7 +18,7 @@ const rules = [
     {
         test: /\.svg$/,
         loader: 'svg-inline-loader'
-    },
+    }
 ]
 
 module.exports = {
@@ -38,6 +38,7 @@ module.exports = {
             template: path.resolve(__dirname, 'index.html')
         }),
     ],
+    devtool: 'eval-source-map',
     resolve: {
         extensions: [
             '.js',

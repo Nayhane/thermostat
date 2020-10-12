@@ -1,74 +1,86 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from "react-redux";
 import { fetchTemp, patchTemperature } from '@store/api';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
+import debounce from 'lodash/debounce';
 import { CloudTwoTone } from '@material-ui/icons';
-import { DateRangeTwoTone } from '@material-ui/icons';
 import { Battery30TwoTone } from '@material-ui/icons';
 import { AccessTimeTwoTone } from '@material-ui/icons';
 
-import Button from '@components/Button/Button';
 import ContentBox from '@components/ContentBox/ContentBox';
+import TemperatureBox from '@components/TemperatureBox/TemperatureBox';
 
 import './App.css'
 
 const App = props => {
-    const { dispatch, currentTemp, currentSetpoint, timestamp, error } = props
-    const [formattedTimestamp, setFormattedTimestamp] = useState('')
+    const {
+        dispatch,
+        currentTemp,
+        currentSetpoint,
+        timestamp,
+    } = props;
+    const [formattedTimestamp, setFormattedTimestamp] = useState('');
     const date = format(new Date(), 'd LLL yyyy');
     const time = format(new Date(), 'kk:mm');
 
     useEffect(() => {
-        setInterval(() => dispatch(fetchTemp()), 2000)
-    }, [])
-
-    useEffect(() => {
-        if (error) {
-            dispatch(fetchTemp())
-        }
-    }, [error])
-
+        setInterval(() => dispatch(fetchTemp()), 1000);
+    }, []);
 
     useEffect(() => {
         if (timestamp) {
             const formatDate = format(new Date(timestamp), 'd LLL yy kk:mm:ss');
             setFormattedTimestamp(formatDate);
         }
-    }, [timestamp])
+    }, [timestamp]);
 
-    const setTemperature = useCallback(
+    const updateTemp = useCallback(
+        debounce((current, updateTemp) => {
+            dispatch(patchTemperature(current, updateTemp));
+        }), []
+    );
+
+    const onClick = useCallback(
         values => {
-            let temperature = currentSetpoint;
-            const updateTime = Date.now();
+            let newTemperature = currentSetpoint;
 
             if (values === 'isAdd') {
-                temperature = currentSetpoint + 0.5;
+                newTemperature = currentSetpoint + 0.5;
             } else {
-                temperature = currentSetpoint - 0.5;
+                newTemperature = currentSetpoint - 0.5;
             }
-            return dispatch(patchTemperature(currentTemp, temperature, updateTime));
+
+            updateTemp(currentSetpoint, newTemperature);
         },
-        [currentTemp, currentSetpoint],
-    )
+        [currentSetpoint],
+    );
 
     return (
         <div className='app'>
             <div className='generic-info'>
                 <ContentBox title={time} body={date} />
-                <ContentBox title='Asmterdam' body='16,0°' icon={<CloudTwoTone />} />
-                <ContentBox body='2,48m³' title='Gas today' icon={<Battery30TwoTone />} />
-                <ContentBox title='Last update at' body={formattedTimestamp} icon={<AccessTimeTwoTone />} />
+                <ContentBox
+                    title='Asmterdam'
+                    body='16,0°'
+                    icon={<CloudTwoTone className='icon' />}
+                />
+                <ContentBox
+                    body='2,48m³'
+                    title='Gas today'
+                    icon={<Battery30TwoTone className='icon' />}
+                />
+                <ContentBox
+                    title='Last update at'
+                    body={formattedTimestamp}
+                    icon={<AccessTimeTwoTone className='icon' />}
+                />
             </div>
-            <div className='temp-container'>
-                <div className='temperature'>
-                    <ContentBox title={`${currentTemp}°`} body='Room temperature' />
-                    <ContentBox title={`${currentSetpoint}°`} body='set temperature' />
-                </div>
-                <div className='button'>
-                    <Button onClick={setTemperature} />
-                    <Button isAdd onClick={() => setTemperature('isAdd')} />
-                </div>
-            </div>
+            <TemperatureBox
+                currentTemp={currentTemp}
+                currentSetpoint={currentSetpoint}
+                onClick={onClick}
+                onClickAdd={() => onClick('isAdd')}
+            />
         </div>
     );
 }
@@ -76,10 +88,9 @@ const App = props => {
 
 const mapStateToProps = state => {
     return {
-        error: state.error,
-        currentTemp: state.currentTemp,
-        currentSetpoint: state.currentSetpoint,
-        timestamp: state.timestamp
+        currentTemp: state.data.currentTemp,
+        currentSetpoint: state.data.currentSetpoint,
+        timestamp: state.data.timestamp
     };
 }
 

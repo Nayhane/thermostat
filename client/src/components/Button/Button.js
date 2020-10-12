@@ -7,7 +7,7 @@ import { IndeterminateCheckBox } from '@material-ui/icons';
 import './styles.css';
 
 const Button = props => {
-    const { onClick, isAdd } = props
+    const { onClick, isAdd } = props;
 
     return (
         <StylesProvider injectFirst>
@@ -19,7 +19,7 @@ const Button = props => {
                     )}
             </IconButton>
         </StylesProvider>
-    )
-}
+    );
+};
 
 export default Button;

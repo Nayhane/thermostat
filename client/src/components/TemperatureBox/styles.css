@@ -1,0 +1,70 @@
+.container {
+  background-color: #BDEBE0;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.temperature {
+  background-color: #f8f8ff;
+  border-radius: 8px;
+  color: #1C466C;
+  padding: 16px;
+  text-align: center;
+}
+
+.button {
+  background-color: #f8f8ff;
+  border-radius: 8px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.current-temp {
+  font-size: 48px;
+  line-height: 1.5;
+}
+
+.new-temp {
+  align-items: center;
+  display: flex;
+  font-size: 24px;
+  justify-content: center;
+  line-height: 1.5;
+}
+
+.icon-up {
+  color: #66CE98;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.agenda {
+  background-color: #f8f8ff;
+  border-radius: 8px;
+  color: #1C466C;
+  height: 25%;
+  padding: 16px;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.icon-agenda {
+  color: #66CE98;
+  font-size: 56px;
+  margin-top: 16px;
+}
+
+.MuiCircularProgress-root.MuiCircularProgress-colorPrimary {
+  color: #66CE98;
+}
+
+@media screen and (min-width: 600px) {
+  .container {
+    margin-top: 8px;
+    padding: 16px;
+  }
+
+  .temperature {
+    min-width: 150px;
+  }
+}

@@ -20,7 +20,7 @@ const ContentBox = props => {
                 </div>
             </div>
         </StylesProvider>
-    )
-}
+    );
+};
 
 export default ContentBox;

@@ -1,26 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { throttle } from 'lodash';
+import { PersistGate } from 'redux-persist/integration/react'
 
-import { loadState, saveState } from './localStorage'
-
-import rootReducer from './store/reducers';
+import { store, persistor } from '@store/store';
 import App from './App';
-
-const persistedState = loadState();
-const store = createStore(rootReducer, persistedState, composeWithDevTools(applyMiddleware(thunk)));
-
-store.subscribe(throttle(() => {
-    saveState(store.getState());
-}, 1000));
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+            <App />
+        </PersistGate>
     </Provider>,
     document.getElementById('root')
 );

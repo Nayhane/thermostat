@@ -1,38 +1,42 @@
-
 import axios from 'axios';
-import { fetchData, fetchDataFailed, fetchDataSuccess, setTemperature } from './actions'
+// import axiosRetry from 'axios-retry';
+
+import {
+    fetchData,
+    fetchDataFailed,
+    fetchDataSuccess,
+    setTemperature,
+    setTemperatureSuccess,
+    setTemperatureFailed
+} from './actions';
 
 export const fetchTemp = () => {
     return dispatch => {
         dispatch(fetchData());
-        fetch(`http://localhost:9090`)
+        axios(`http://localhost:9090`)
             .then(response => {
                 if (response.status === 202) {
-                    dispatch(fetchDataFailed());
+                    // TODO add axios-retry
+                    throw new axios.Cancel();
                 }
-                return response.json();
-            })
-            .then(data => {
-                const dataObj = data && Object.keys(data)
-                if (dataObj.length > 0) {
-                    return dispatch(fetchDataSuccess(data));
-                }
+                dispatch(fetchDataSuccess(response.data));
             })
             .catch(() => {
-                return dispatch(fetchDataFailed());
+                dispatch(fetchDataFailed());
             })
-    }
+    };
 }
 
-export const patchTemperature = (currentTemp, currentSetpoint, timestamp) => {
-    const data = { currentTemp, currentSetpoint, timestamp }
+export const patchTemperature = (currentTemp, currentSetpoint) => {
+    const data = { currentTemp, currentSetpoint }
     return dispatch => {
-        axios.patch(`http://localhost:9090`, data)
-            .then(response => {
-                dispatch(setTemperature(data));
+        dispatch(setTemperature());
+        axios.patch(`http://localhost:9090`, { currentTemp, currentSetpoint })
+            .then(() => {
+                dispatch(setTemperatureSuccess());
             })
-            .catch(err => {
-                throw err;
+            .catch(() => {
+                dispatch(setTemperatureFailed());
             });
-    }
+    };
 }
