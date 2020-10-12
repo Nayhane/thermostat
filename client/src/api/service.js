@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import axiosRetry from 'axios-retry';
 
 import {
     fetchData,
@@ -8,7 +7,10 @@ import {
     setTemperature,
     setTemperatureSuccess,
     setTemperatureFailed
-} from './actions';
+} from '@store/actions';
+
+const MAX_RETRY = 10;
+let currentRetry = 0;
 
 export const fetchTemp = () => {
     return dispatch => {
@@ -16,22 +18,28 @@ export const fetchTemp = () => {
         axios(`http://localhost:9090`)
             .then(response => {
                 if (response.status === 202) {
-                    // TODO add axios-retry
                     throw new axios.Cancel();
                 }
+                currentRetry = 0;
                 dispatch(fetchDataSuccess(response.data));
             })
             .catch(() => {
-                dispatch(fetchDataFailed());
+                if (currentRetry < MAX_RETRY) {
+                    currentRetry++;
+                    console.log('Retrying...');
+                    dispatch(fetchTemp());
+                } else {
+                    console.log('Retried but still failed');
+                }
             })
     };
 }
 
 export const patchTemperature = (currentTemp, currentSetpoint) => {
-    const data = { currentTemp, currentSetpoint }
+    const data = { currentTemp, currentSetpoint };
     return dispatch => {
         dispatch(setTemperature());
-        axios.patch(`http://localhost:9090`, { currentTemp, currentSetpoint })
+        axios.patch(`http://localhost:9090`, data)
             .then(() => {
                 dispatch(setTemperatureSuccess());
             })

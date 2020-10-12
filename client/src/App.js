@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from "react-redux";
-import { fetchTemp, patchTemperature } from '@store/api';
+import { fetchTemp, patchTemperature } from './api/service';
 import { format } from 'date-fns';
 import debounce from 'lodash/debounce';
 import { CloudTwoTone } from '@material-ui/icons';
@@ -24,7 +24,7 @@ const App = props => {
     const time = format(new Date(), 'kk:mm');
 
     useEffect(() => {
-        setInterval(() => dispatch(fetchTemp()), 1000);
+        setInterval(() => dispatch(fetchTemp()), 2000);
     }, []);
 
     useEffect(() => {
