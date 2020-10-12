@@ -1,17 +1,17 @@
 {
-  "name": "frontend-case",
+  "name": "thermostat",
   "version": "1.0.0",
-  "description": "Starter pack for the Quby Frontend interview case",
+  "description": "Starter pack for the frontend",
   "author": "Steven Straatemans <steven@straatemans.nl>",
   "main": "build/index.js",
   "scripts": {
-    "startclient": "cd client && npm install && npm start",
+    "startclient": "webpack-dev-server --mode development --open --hot --port 1234",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
-    "dev": "set debug=* && ts-node-dev --respawn --transpileOnly ./server/index.ts --r dotenv/config",
+    "build": "webpack --mode development",
+    "dev": "ts-node-dev --respawn --watch server server/index.ts",
     "prestart": "npm run build",
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "license": "ISC",
   "dependencies": {

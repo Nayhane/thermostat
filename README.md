@@ -1,17 +1,18 @@
-# Quby Frontend case
+# Thermostat dashboard
 
-This is the startpack for the Quby frontend case.
-Before you start, please read this document carefully.
-When you have questions, don't hesitate to ask them.
+ ## Libraries:
 
-We think you need about 6 hours for this assignment.
-If it's not finished, that's ok. We are curious what your way of thinking is here.
-What your choosen solution is and your way of working.
+ - React
+ - Redux
+ - Redux-persist
+ - Redux-thunk
+ - Jest and enzyme
+ - Material ui
+ - Lodash
+ - Axios
 
-## Goal of the assignment
 
-We want you to create a small thermostat dashboard.  
-It needs the following:
+### Goal
 
 - Current temperature in the room.
 - Current set temperature.
@@ -41,8 +42,4 @@ There are 2 endpoints for this api.
 
 ### Client
 
-Please put all your custom code in the `./client` directory.
-The only requirement we have is that you use React, other than that you can do what ever libraries you want.  
-the client website will start at http://localhost:1234
-
-Good luck and we are looking forward to see the results.
+the client website start at http://localhost:1234

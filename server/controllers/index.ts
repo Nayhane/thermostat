@@ -26,6 +26,7 @@ class ThermostatController {
 			customData = {
 				...customData,
 				currentSetpoint: req.body.currentSetpoint,
+				currentTemp: req.body.currentTemp,
 				timestamp: Date.now()
 			};
 			res.status(204).send();
