@@ -5,7 +5,7 @@
   "author": "Steven Straatemans <steven@straatemans.nl>",
   "main": "build/index.js",
   "scripts": {
-    "startclient": "webpack-dev-server --mode development --open --hot --port 1234",
+    "startclient": "cd client && npm install && npm start",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "webpack --mode development",
     "dev": "ts-node-dev --respawn --watch server server/index.ts",
