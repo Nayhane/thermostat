@@ -23,3 +23,9 @@
     padding: 24px;
   }
 }
+
+@media screen and (min-width: 1200px) {
+  .generic-info {
+    margin-left: 100px;
+  }
+}

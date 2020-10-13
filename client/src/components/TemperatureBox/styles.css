@@ -68,3 +68,9 @@
     min-width: 150px;
   }
 }
+
+@media screen and (min-width: 900px) {
+  .container {
+    margin-right: 200px;
+  }
+}
